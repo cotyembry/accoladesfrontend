@@ -7,9 +7,41 @@ const client = new WOMClient({
 	apiKey: 'f2lt6fmp4e6yipahvm47sbld',
 	userAgent: 'cotyembry'
 });
-function timeoutFor70Seconds() {
+async function timeoutFor70Seconds(dataObject = {i: 0, membershipsLength: 0, setState: () => {},}) {
+	//`processed ${i + 1} of ${memberships.length} so far - waiting for 70 seconds due to api limit constraints`
+	let {
+		i = 0,
+			membershipsLength = 0,
+			setState = () => {},
+		} = dataObject;
+	//
+	let cancelId = null,
+		timeLeft = 70;
+
+	function oneSecondTimeout() {
+		// if (cancelId !== null) window.clearTimeout(cancelId);
+		//
+		cancelId = setTimeout(() => {
+			timeLeft = timeLeft - 1;
+			// console.log('in 1 second callback', {
+			// 	message: `processed ${i + 1} of ${membershipsLength} so far - waiting for ${timeLeft} seconds due to api limit constraints`,
+			// 	setState: setState,
+			// })
+			setState({
+				message: `processed ${i + 1} of ${membershipsLength} so far - waiting for ${timeLeft} seconds due to api limit constraints`
+			});
+			oneSecondTimeout();
+		}, 1000)
+	}
+	oneSecondTimeout();
+	//
 	return new Promise((resolve, reject) => {
-		setTimeout(resolve, 70000);
+		setTimeout(() => {
+			if (cancelId !== null) window.clearTimeout(cancelId);
+			//
+			resolve();
+			//
+		}, 70000);
 	})
 }
 function isTotalRankType(rank, ranks) {
@@ -113,7 +145,13 @@ class App extends Component {
 					this.setState({
 						message: `processed ${i + 1} of ${memberships.length} so far - waiting for 70 seconds due to api limit constraints`
 					})
-					await timeoutFor70Seconds()
+					await timeoutFor70Seconds({
+						i,
+						membershipsLength: memberships.length,
+						setState: (state = {}) => {
+							this.setState(state);
+						}
+					})
 				}
 				// console.log(username, level, rank)
 				if (ranks.hasOwnProperty(rank)) {
@@ -365,6 +403,7 @@ class App extends Component {
 						}}
 					>
 						<div style={{...styles.header, backgroundColor: 'red', color: 'white',}}>To Update</div>
+						<div>Count: {this.state.toUpdate.length}</div>
 						<div
 							style={{
 								// paddingTop: '30px',
@@ -397,6 +436,7 @@ class App extends Component {
 						}}
 					>
 						<div style={{...styles.header}}>No Update Needed</div>
+						<div>Count: {this.state.noUpdateNeeded.length}</div>
 						{this.state.noUpdateNeeded.map((value, i) =>
 							<div key={i} style={styles.border}>{value}</div>
 						)}
