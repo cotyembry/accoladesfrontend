@@ -197,17 +197,17 @@ class App extends Component {
 						}
 						else resultsOfPeopleWhoDoNotNeedUpdated.push(`username: ${username} rank: ${rank} totalLevel: ${level}`)
 					}
-					else if (level >= 2200 && level <= 2276) {
+					else if (level >= 2200 && level <= 2375) {
 						//zenyte
 						if (rank !== 'zenyte') {
 							toUpdate.push(`${username} needs to be updated to zenyte - api says their total level is: ${level}`)
 						}
 						else resultsOfPeopleWhoDoNotNeedUpdated.push(`username: ${username} rank: ${rank} totalLevel: ${level}`)
 					}
-					else if (level === 2277) {
+					else if (level === 2376) {
 					//maxed
 						if (rank !== 'maxed' ) {
-							toUpdate.push(`${username} needs to be updated to maxed - api says their total level is: ${level}`)
+						 	toUpdate.push(`${username} needs to be updated to maxed - api says their total level is: ${level}`)
 						}
 						else resultsOfPeopleWhoDoNotNeedUpdated.push(`username: ${username} rank: ${rank} totalLevel: ${level}`)
 					}
@@ -357,14 +357,14 @@ class App extends Component {
 						}
 						else resultsOfPeopleWhoDoNotNeedUpdated.push(`username: ${username} rank: ${rank} totalLevel: ${level}`)
 					}
-					else if (level >= 2200 && level <= 2276) {
+					else if (level >= 2200 && level <= 2375) {
 						//zenyte
 						if (rank !== 'zenyte') {
 							toUpdate.push(`${username} needs to be updated to zenyte - api says their total level is: ${level}`)
 						}
 						else resultsOfPeopleWhoDoNotNeedUpdated.push(`username: ${username} rank: ${rank} totalLevel: ${level}`)
 					}
-					else if (level === 2277) {
+					else if (level === 2376) {
 					//maxed
 						if (rank !== 'maxed' ) {
 							toUpdate.push(`${username} needs to be updated to maxed - api says their total level is: ${level}`)
@@ -406,17 +406,7 @@ class App extends Component {
 						<div>Count: {this.state.toUpdate.length}</div>
 						<div
 							style={{
-								// paddingTop: '30px',
-								cursor: 'pointer',
-								backgroundColor: '#04AA6D',
-								border: 'none',
-								color: 'white',
-								padding: '15px 32px',
-								borderRadius: '4px',
-								textAlign: 'center',
-								textDecoration: 'none',
-								display: 'inline-block',
-								fontSize: '16px',
+								...styles.Button,
 							}}
 							tooltip='click to update clan members'
 							onClick={async () => {
@@ -450,20 +440,11 @@ class App extends Component {
 						<div style={{...styles.header, backgroundColor: 'blue', color: 'white'}}>Update Message</div>
 						<div
 							style={{
-								cursor: 'pointer',
-								backgroundColor: '#04AA6D',
-								border: 'none',
-								color: 'white',
-								padding: '15px 32px',
-								borderRadius: '4px',
-								textAlign: 'center',
-								textDecoration: 'none',
-								display: 'inline-block',
-								fontSize: '16px',
+								...styles.Button,
 							}}
 							tooltip='Click to update out of date clan members (members not updated >24 hours)'
 							onClick={async () => {
-								let {message = '',} = await client.groups.updateAll(5404, '956-841-933');
+								let {message = '',} = await client.groups.updateAll(5404, '687-342-029');
 								this.setState({
 									updateMessage: message,
 								})
@@ -481,16 +462,7 @@ class App extends Component {
 						<div style={{...styles.header, backgroundColor: 'blue', color: 'white'}}>Update Message</div>
 						<div
 							style={{
-								cursor: 'pointer',
-								backgroundColor: '#04AA6D',
-								border: 'none',
-								color: 'white',
-								padding: '15px 32px',
-								borderRadius: '4px',
-								textAlign: 'center',
-								textDecoration: 'none',
-								display: 'inline-block',
-								fontSize: '16px',
+								...styles.Button,
 							}}
 							tooltip='click to update individual clan members'
 							onClick={async () => {
@@ -515,6 +487,19 @@ const styles = {
 	border: {
 		border: 'solid 1px white',
 		borderRadius: '4px',
+	},
+	Button: {
+		cursor: 'pointer',
+		backgroundColor: '#04AA6D',
+		border: 'solid 2px white',
+		boxSizing: 'border-box',
+		color: 'white',
+		padding: '15px 32px',
+		borderRadius: '4px',
+		textAlign: 'center',
+		textDecoration: 'none',
+		display: 'inline-block',
+		fontSize: '16px',
 	}
 }
 
