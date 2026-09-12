@@ -208,8 +208,10 @@ class App extends Component {
 		const newCompetition = await client.competitions.createCompetition({
 			title: this.state.competitionTitleName,
 			metric: this.getMetric(),
-			startsAt: addHoursToDate(new Date(this.state.startDate), 5).toISOString(), 	//need plus 5 hours to get to central time it seems from my central local time
-			endsAt: addHoursToDate(new Date(this.state.endDate), 5).toISOString(),		//need plus 5 hours to get to central time it seems from my central local time
+			// startsAt: addHoursToDate(new Date(this.state.startDate), 5).toISOString(), 	//need plus 5 hours to get to central time it seems from my central local time
+			// endsAt: addHoursToDate(new Date(this.state.endDate), 5).toISOString(),		//need plus 5 hours to get to central time it seems from my central local time
+			startsAt: new Date(this.state.startDate),
+			endsAt: new Date(this.state.endDate),
 			groupId: 5404,
 			groupVerificationCode: '687-342-029',
 			// participants: ['psikoi', 'usbc', 'sethmare']
@@ -535,6 +537,7 @@ class App extends Component {
 		}
 	}
 	getMetric() {
+
 		if (this.state.selected === 'EHP') { return Metric.EHP }
 		else if (this.state.selected === 'EHB') { return Metric.EHB }
 		else if (this.state.selected === 'ABYSSAL_SIRE') { return Metric.ABYSSAL_SIRE }
